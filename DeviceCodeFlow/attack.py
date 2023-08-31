@@ -226,8 +226,9 @@ def device_code_flow_auto_polling():
         "code": r.json()["device_code"],
         "grant_type": "urn:ietf:params:oauth:grant-type:device_code",
     }
-    print("Polling for succesfull auth every 4 seconds...")
-    for i in range(0, 60):
+    print("Polling for succesfull auth every 4 seconds for 15 minutes...")
+    start_time = time.time()
+    while time.time() - start_time < 900:  # 15 minutes = 900 seconds
         tr = requests.post(token_retrieve_url, data=data, headers=headers)
         if "error" in tr.json():
             time.sleep(4)
